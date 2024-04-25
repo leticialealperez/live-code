@@ -6,6 +6,7 @@ export interface Produts {
 	id: string;
 	name: string;
 	price: number;
+	quantity: number;
 }
 
 export function Home() {
