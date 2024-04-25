@@ -1,9 +1,10 @@
 import { Fragment } from "react/jsx-runtime";
+import { Title } from "../components/styled/Title";
 
 export function Home() {
 	return (
 		<Fragment>
-			<h1>Oi 🚀</h1>
+			<Title>Alô GrowDev</Title>
 		</Fragment>
 	);
 }
