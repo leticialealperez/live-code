@@ -1,9 +1,10 @@
 import { Fragment } from "react/jsx-runtime";
+import { AppRoutes } from "./config/routes/AppRoutes";
 
 export function App() {
 	return (
 		<Fragment>
-			<h1>Live Code 🚀</h1>
+			<AppRoutes />
 		</Fragment>
 	);
 }
