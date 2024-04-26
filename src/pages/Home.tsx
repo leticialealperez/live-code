@@ -1,6 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import { Title } from "../components/styled/Title";
 import { Table } from "../components/styled/Table";
+import { morkProduct } from "../mock/products";
 
 export interface Produts {
 	id: string;
@@ -16,14 +17,20 @@ export function Home() {
 			<Table>
 				<thead>
 					<tr>
-						<th>Descrição</th>
-						<th>Preço</th>
-						<th>Quantidade</th>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<th></th>
+                    {morkProduct.map((product)=>(
+                        <tr key={product.id}>
+                            <td>{product.name}</td>
+                            <td>{product.price}</td>
+                            <td>{product.quantity}</td>
+                        </tr>
+                    ))}
 				</tbody>
 			</Table>
 		</Fragment>
