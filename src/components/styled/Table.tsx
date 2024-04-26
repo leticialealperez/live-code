@@ -11,4 +11,9 @@ export const Table = styled.table`
 		padding: 10px;
 		border: 1px solid #fff;
 	}
+
+	tbody{
+		tr{cursor: pointer;}
+	}
+
 `;

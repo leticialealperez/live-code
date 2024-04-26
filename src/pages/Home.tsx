@@ -35,20 +35,33 @@ export function Home() {
 	]);
 	//criando formatador
 	//moeda
-	const currencyFormatter = new Intl.NumberFormat('pt-BR',{style: 'currency', currency: 'BRL'})
-	
+	const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+		style: "currency",
+		currency: "BRL",
+	});
+
 	//deletar
-	
+	function productDelete(idProduct: string) {
+		if (window.confirm("Você deseja realmente deletar o produto?")) {
+			setProduct((currentValue) => currentValue.filter((productActual)=> productActual.id !== idProduct));
+		}
+	}
+
+	//criar formulário capaz de cadastrar um novo produto
+	//remover o mock
+	//sempre salvar os produtos no localStorage
+	//ser possivel atualizar um produto, não precisa de modal, usar o prompt do navegador
+	// para capturar os dados.
 
 	// valor total em estoque
-	const amountTotal = useMemo(()=>{		 
-		const value = products.reduce((acc, current)=>{
-			const valuePerProduct = current.price * current.quantity
+	const amountTotal = useMemo(() => {
+		const value = products.reduce((acc, current) => {
+			const valuePerProduct = current.price * current.quantity;
 
 			return acc + valuePerProduct;
-		}, 0)
-		return value
-	},[products])
+		}, 0);
+		return value;
+	}, [products]);
 
 	// quantidade total em estoque
 	const quantityTotal = useMemo(() => {
@@ -75,7 +88,7 @@ export function Home() {
 
 				<tbody>
 					{products.map((product) => (
-						<tr key={product.id}>
+						<tr key={product.id} onClick={()=> productDelete(product.id)}>
 							<td>{product.name}</td>
 							<td>{currencyFormatter.format(product.price)}</td>
 							<td>{product.quantity}</td>
