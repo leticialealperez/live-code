@@ -33,8 +33,22 @@ export function Home() {
 			quantity: 10,
 		},
 	]);
+	//criando formatador
+	//moeda
+	const currencyFormatter = new Intl.NumberFormat('pt-BR',{style: 'currency', currency: 'BRL'})
+	
+	//deletar
+	
 
 	// valor total em estoque
+	const amountTotal = useMemo(()=>{		 
+		const value = products.reduce((acc, current)=>{
+			const valuePerProduct = current.price * current.quantity
+
+			return acc + valuePerProduct;
+		}, 0)
+		return value
+	},[products])
 
 	// quantidade total em estoque
 	const quantityTotal = useMemo(() => {
@@ -49,7 +63,7 @@ export function Home() {
 		<Fragment>
 			<Title>Alô GrowDev</Title>
 			<Paragraph>Quantity of Stock: {quantityTotal}</Paragraph>
-			<Paragraph>Amount of Stock: {}</Paragraph>
+			<Paragraph>Amount of Stock: {currencyFormatter.format(amountTotal)}</Paragraph>
 			<Table>
 				<thead>
 					<tr>
@@ -63,7 +77,7 @@ export function Home() {
 					{products.map((product) => (
 						<tr key={product.id}>
 							<td>{product.name}</td>
-							<td>{product.price}</td>
+							<td>{currencyFormatter.format(product.price)}</td>
 							<td>{product.quantity}</td>
 						</tr>
 					))}
