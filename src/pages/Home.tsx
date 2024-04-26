@@ -2,6 +2,7 @@ import { Fragment } from "react/jsx-runtime";
 import { Title } from "../components/styled/Title";
 import { Table } from "../components/styled/Table";
 import { morkProduct } from "../mock/products";
+import { useState } from "react";
 
 export interface Produts {
 	id: string;
@@ -11,6 +12,8 @@ export interface Produts {
 }
 
 export function Home() {
+	const [products, setProduct] = useState<Produts[]>(morkProduct)
+
 	return (
 		<Fragment>
 			<Title>Alô GrowDev</Title>
@@ -24,7 +27,7 @@ export function Home() {
 				</thead>
 
 				<tbody>
-                    {morkProduct.map((product)=>(
+                    {products.map((product)=>(
                         <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.price}</td>
