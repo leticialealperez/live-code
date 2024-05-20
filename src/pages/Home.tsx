@@ -6,7 +6,6 @@ import { Table } from "../components/styled/Table";
 import { Title } from "../components/styled/Title";
 import { Modal } from "../components/fuctional/Modal";
 
-
 export interface Produts {
 	id: string;
 	name: string;
@@ -15,8 +14,7 @@ export interface Produts {
 }
 
 export function Home() {
-	const [openModal, setOpenModal] = useState<boolean>(false);
-
+	const [isShow, setIsShow] = useState<boolean>(false);
 
 	const [products, setProduct] = useState<Produts[]>([
 		{
@@ -48,13 +46,20 @@ export function Home() {
 	//deletar
 	function productDelete(idProduct: string) {
 		if (window.confirm("Você deseja realmente deletar o produto?")) {
-			setProduct((currentValue) => currentValue.filter((productActual)=> productActual.id !== idProduct));
+			setProduct((currentValue) =>
+				currentValue.filter((productActual) => productActual.id !== idProduct),
+			);
 		}
 	}
 
+	//Abrir Modal
+
+	function showModal() {
+		setIsShow((prev) => !prev);
+	}
+
 	//criar formulário capaz de cadastrar um novo produto
-	
-	
+
 	//remover o mock
 	//sempre salvar os produtos no localStorage
 	//ser possivel atualizar um produto, não precisa de modal, usar o prompt do navegador
@@ -95,7 +100,7 @@ export function Home() {
 
 				<tbody>
 					{products.map((product) => (
-						<tr key={product.id} onClick={()=> productDelete(product.id)}>
+						<tr key={product.id} onClick={() => productDelete(product.id)}>
 							<td>{product.name}</td>
 							<td>{currencyFormatter.format(product.price)}</td>
 							<td>{product.quantity}</td>
@@ -103,7 +108,8 @@ export function Home() {
 					))}
 				</tbody>
 			</Table>
-			<button onClick={Modal}>Adicional Produto</button>
+			<button onClick={showModal}>Adicional Produto</button>
+			<Modal isShow={isShow} setProduct={setProduct} showModal={showModal} />
 		</Fragment>
 	);
 }
