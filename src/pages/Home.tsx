@@ -4,6 +4,8 @@ import { v4 as randonId } from "uuid";
 import { Paragraph } from "../components/styled/Paragraph";
 import { Table } from "../components/styled/Table";
 import { Title } from "../components/styled/Title";
+import { Modal } from "../components/fuctional/Modal";
+
 
 export interface Produts {
 	id: string;
@@ -13,6 +15,9 @@ export interface Produts {
 }
 
 export function Home() {
+	const [openModal, setOpenModal] = useState<boolean>(false);
+
+
 	const [products, setProduct] = useState<Produts[]>([
 		{
 			id: randonId(),
@@ -48,6 +53,8 @@ export function Home() {
 	}
 
 	//criar formulário capaz de cadastrar um novo produto
+	
+	
 	//remover o mock
 	//sempre salvar os produtos no localStorage
 	//ser possivel atualizar um produto, não precisa de modal, usar o prompt do navegador
@@ -96,6 +103,7 @@ export function Home() {
 					))}
 				</tbody>
 			</Table>
+			<button onClick={Modal}>Adicional Produto</button>
 		</Fragment>
 	);
 }
