@@ -1,10 +1,15 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { v4 as randonId } from "uuid";
 import { Paragraph } from "../components/styled/Paragraph";
 import { Table } from "../components/styled/Table";
 import { Title } from "../components/styled/Title";
-import { Modal } from "../components/fuctional/Modal";
+import { ModalProduct } from "../components/fuctional/Modal";
+import { ModalFooter } from "../components/styled/Modal/ModalFooter";
+import { ActionButton } from "../components/styled/ActionButton";
+import { ModalHeader } from "../components/styled/Modal/ModalHeader";
+import { ModalTitle } from "../components/styled/Modal/ModalTitle";
+import { ModalBody } from "../components/styled/Modal/ModalBody";
 
 export interface Produts {
 	id: string;
@@ -14,7 +19,10 @@ export interface Produts {
 }
 
 export function Home() {
-	const [isShow, setIsShow] = useState<boolean>(false);
+	const [display, setDisplay] = useState<boolean>(false);
+	const nameRef = useRef<HTMLInputElement>(null);
+	const priceRef = useRef<HTMLInputElement>(null);
+	const quantityRef = useRef<HTMLInputElement>(null);
 
 	const [products, setProduct] = useState<Produts[]>([
 		{
@@ -36,6 +44,29 @@ export function Home() {
 			quantity: 10,
 		},
 	]);
+
+	console.log(products);
+	
+
+	function createProduct() {
+		const name = nameRef.current?.value;
+		const price = priceRef.current?.value;
+		const quantity = quantityRef.current?.value;
+		
+		if (!name || !price || !quantity) {
+			return;
+		}
+
+		const newProduct: Produts = {
+			id: randonId(),
+			name,
+			price: Number(price),
+			quantity: Number(quantity),
+		};
+
+		setProduct((data) => [newProduct, ...data]);
+	}
+
 	//criando formatador
 	//moeda
 	const currencyFormatter = new Intl.NumberFormat("pt-BR", {
@@ -53,9 +84,8 @@ export function Home() {
 	}
 
 	//Abrir Modal
-
 	function showModal() {
-		setIsShow((prev) => !prev);
+		setDisplay((prev) => !prev);
 	}
 
 	//criar formulário capaz de cadastrar um novo produto
@@ -109,7 +139,32 @@ export function Home() {
 				</tbody>
 			</Table>
 			<button onClick={showModal}>Adicional Produto</button>
-			<Modal isShow={isShow} setProduct={setProduct} showModal={showModal} />
+			<ModalProduct display={display}>
+				<ModalHeader>
+					<ModalTitle>TESTE TITLE</ModalTitle>
+				</ModalHeader>
+				<ModalBody>
+					<input name='name' ref={nameRef} type='text' placeholder='Nome do produto' />
+					<input
+						name='price'
+						ref={priceRef}
+						type='number'
+						placeholder='Preço do produto'
+					/>
+					<input
+						name='quantity'
+						ref={quantityRef}
+						type='number'
+						placeholder='Quantidade do produto'
+					/>
+				</ModalBody>
+				<ModalFooter>
+					<ActionButton onClick={showModal}>Cancelar</ActionButton>
+					<ActionButton type='button' onClick={createProduct}>
+						ok
+					</ActionButton>
+				</ModalFooter>
+			</ModalProduct>
 		</Fragment>
 	);
 }
